@@ -1,0 +1,4 @@
+2024/10/01	19:43:10	13921e9a-c625-43fd-8bcc-8940f3cba530	TypeError: res.send is not a function
+2024/10/01	19:52:46	9f3a7002-d665-4c80-8b7a-64d9c722e9f8	TypeError: console.loge is not a function
+2024/10/01	19:55:32	5ea7447c-1f30-4075-8893-ad865eaf9bae	TypeError: res.json is not a function
+2024/10/02	19:47:46	f40f516c-d6c9-47ac-b038-7dd5f3c9e026	SyntaxError: Expected double-quoted property name in JSON at position 105 (line 6 column 1)
