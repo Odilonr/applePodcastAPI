@@ -142,3 +142,8 @@
 2024/10/02	21:27:04	28dd9d44-3e42-4ee9-8dd9-30e1ad28d606	PUT	undefined	/shows/66fdfecbb7fdfacdad1d6fb7
 2024/10/02	21:28:30	1c314a09-b4ff-42e8-8077-a6b9d94a8880	PUT	undefined	/shows/66fdfd0c3a951780c2d40485
 2024/10/02	21:29:05	fbf68009-34da-4c8e-b1d4-2527b8a414f7	PUT	undefined	/shows/66fdfd0c3a951780c2d40485
+2024/10/04	11:52:42	001b2443-8323-4bba-b817-28d5a011b0df	GET	undefined	/
+2024/10/04	11:52:47	ba84334c-a434-400a-992e-425f4ee7b0da	GET	undefined	/shows
+2024/10/04	11:52:47	ee27c96a-f3c7-44c8-8e97-b733cc561d47	GET	undefined	/favicon.ico
+2024/10/04	11:53:05	02f092ad-c917-48fe-ade4-dad433347aa4	GET	undefined	/shows
+2024/10/04	11:57:03	fd60629d-81d1-4139-ad43-44b9fbca3c1f	GET	undefined	/shows/
