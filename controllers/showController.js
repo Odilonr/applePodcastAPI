@@ -14,7 +14,7 @@ async function addShow (req, res) {
   const {name, description, profileImage, releaseSchedule} = req.body
   const missing = missingData(name, description, profileImage, releaseSchedule)
   if (!name || !description || !profileImage || !releaseSchedule) {
-    throw createError(400, 'message', `${missing} are required.`)
+    throw createError(400, 'message', `${missing} required.`)
   }
 
   const duplicate = await Show.findOne({ name: name }).exec()

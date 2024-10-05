@@ -147,3 +147,4 @@
 2024/10/04	11:52:47	ee27c96a-f3c7-44c8-8e97-b733cc561d47	GET	undefined	/favicon.ico
 2024/10/04	11:53:05	02f092ad-c917-48fe-ade4-dad433347aa4	GET	undefined	/shows
 2024/10/04	11:57:03	fd60629d-81d1-4139-ad43-44b9fbca3c1f	GET	undefined	/shows/
+2024/10/04	12:00:08	31108c88-093e-41e3-b8b2-70bb512b8185	POST	undefined	/shows/

@@ -1,12 +1,18 @@
-import mongoose from "mongoose";
+import pg from 'pg'
+import dotenv from 'dotenv'
+dotenv.config()
 
-async function connectDB () {
-  try {
-    mongoose.set('strictQuery', false)
-    await mongoose.connect(process.env.DATABASE_URI)
-  } catch (err) {
-    console.log(err)
-  }
+const { Pool } = pg
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+})
+
+async function connectDb () {
+  await pool.connect()
 }
 
-export { connectDB }
+export {pool, connectDb}
+
+
+
