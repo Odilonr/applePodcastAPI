@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+/*import mongoose from "mongoose"
 
 const Schema = mongoose.Schema
 
@@ -55,5 +55,5 @@ const episodeSchema = new Schema({
 
 const Episode = mongoose.model('Episode', episodeSchema)
 
-export { Show, Episode }
+export { Show, Episode } */
 

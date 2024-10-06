@@ -9,7 +9,7 @@ const pool = new Pool({
 })
 
 async function poolQquery(text, params) {
-  const res = await pull.query(text, params)
+  const res = await pool.query(text, params)
   return res
 }
 
@@ -19,7 +19,7 @@ async function getClient() {
 }
 
 
-export {poolQquery,getClient}
+export {poolQquery,getClient, pool}
 
 
 

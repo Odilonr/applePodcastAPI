@@ -1,28 +1,29 @@
-import { User } from "../model/Users.js";
+import { getUser, createUser, addRefreshToken, getUserByToken } from "../queries/userQueries.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import  createError  from 'http-errors'
 
 async function registerNewUser (req, res) {
-  const username = req.body.username
-  const password = req.body.password
-  if (!username || !password) {
+  const { username, password, email } = req.body
+
+  if (!username || !password || !email) {
     throw createError(400, 'Username and password required')
   }
-  const duplicate = await User.findOne({ username: username }).exec()
-  if (duplicate) {
+
+  const duplicateUser = await getUser(username)
+  if (duplicateUser) {
     throw createError(409, 'Invalid Credentials')
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
 
-  const result = await User.create({
-    "username": username,
-    "password": hashedPassword
-  })
-  console.log(result)
+  const newUser = {
+    username: username,
+    password: hashedPassword, 
+    email: email
+  }
+  const results = await createUser(newUser)
   res.status(201).json({"message": `New user ${username} created`})
-  
 }
 
 async function authenticateUser (req, res) {
@@ -32,19 +33,19 @@ async function authenticateUser (req, res) {
     throw createError(400, 'Username and password required')
   }
 
-  const foundUser = await User.findOne({ username: username }).exec()
+  const foundUser = await getUser(username)
   if (!foundUser) {
-    throw createError(401, 'Rrong Username or password')
+    throw createError(401, 'Wrong Username or password')
   }
   const passwordMatch = await bcrypt.compare(password, foundUser.password)
   if (passwordMatch){
-    const roles = Object.values(foundUser.roles)
+    const role = foundUser.is_admin ? 'admin' : 'regular'
     const accessToken = jwt.sign(
       {
         "UserInfo":
           {
             "username": foundUser.username,
-            "roles": roles
+            "role": role
           }
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -55,8 +56,7 @@ async function authenticateUser (req, res) {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: '1d' }
     )
-    foundUser.refreshToken = refreshToken
-    await foundUser.save()
+    const result = await addRefreshToken(foundUser.id, refreshToken)
     res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000})
     res.json({ accessToken })
   } else {
@@ -70,7 +70,7 @@ async function refreshToken (req, res) {
     throw createError(400)
   }
   const refreshToken = cookies.jwt
-  const foundUser = await User.findOne({refreshToken: refreshToken}).exec()
+  const foundUser = await getUserByToken(refreshToken)
   if (!foundUser) {
     throw createError(403)
   }
@@ -82,16 +82,16 @@ async function refreshToken (req, res) {
       if (err || foundUser.username !== decoded.username) {
         return res.sendStatus(403)
       }
-      const roles = Object.values(foundUser.roles)
+      const role = foundUser.is_admin ? 'admin' : 'regular'
       const accessToken = jwt.sign(
         {
           "UserInfo" : {
             "username": decoded.username,
-            "roles": roles
+            "roles": role
           }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15min' }
+        { expiresIn: '60s' }
       )
       res.json({ accessToken })
     }
@@ -105,18 +105,16 @@ async function logOutUser (req, res) {
   }
   const refreshToken = cookies.jwt
 
-
-  const foundUser = await User.findOne({refreshToken: refreshToken}).exec()
+  const foundUser = await getUserByToken(refreshToken)
   if (!foundUser) {
     res.clearCookie('jwt', { httpOnly: true})
     return res.sendStatus(204)
   }
-  foundUser.refreshToken = ''
-  await foundUser.save()
+  const result = await addRefreshToken(foundUser.id, null)
 
   res.clearCookie('jwt', { httpOnly: true, sameSite: 'None'})
   res.sendStatus(204)
-}
+} 
 
 export {registerNewUser, authenticateUser, refreshToken, logOutUser}
 

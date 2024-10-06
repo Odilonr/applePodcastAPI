@@ -7,7 +7,7 @@ CREATE TABLE users (
   username TEXT UNIQUE, 
   password TEXT NOT NULL,
   email TEXT NOT NULL,
-  is_admin BOOLEAN
+  is_admin BOOLEAN DEFAULT TRUE
 );
 
 -- Down Migration

@@ -4,7 +4,6 @@ import { logger } from './middleware/logEvents.js'
 import { errorHandler } from './middleware/errorHandler.js'
 import cookieParser from 'cookie-parser'
 import userRouter from './routes/users.js'
-import showRouter from './routes/shows.js'
 import 'express-async-errors'
 
 dotenv.config()
@@ -24,7 +23,7 @@ app.use(cookieParser())
 app.use('/user', userRouter)
 
 //app.use(verifyJWT)
-app.use('/shows', showRouter)
+//app.use('/shows', showRouter)
 
 app.use(errorHandler)
 
