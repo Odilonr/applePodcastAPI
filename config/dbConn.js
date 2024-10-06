@@ -8,11 +8,18 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 })
 
-async function connectDb () {
-  await pool.connect()
+async function poolQquery(text, params) {
+  const res = await pull.query(text, params)
+  return res
 }
 
-export {pool, connectDb}
+async function getClient() {
+  const client = await pool.connect()
+  return client
+}
+
+
+export {poolQquery,getClient}
 
 
 
