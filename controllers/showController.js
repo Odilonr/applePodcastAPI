@@ -1,4 +1,3 @@
-/*import { Show } from "../queries/ShowsAndEpisodes.js";
 import createError from 'http-errors'
 import { missingData } from "./utils/missingData.js";
 
@@ -77,4 +76,4 @@ async function getShow(req, res) {
 }
 
 
-export { getAllShows, addShow, updateShow, deleteShow, getShow } */
+export { getAllShows, addShow, updateShow, deleteShow, getShow } 
