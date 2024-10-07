@@ -4,14 +4,14 @@ import { format } from 'date-fns';
 
 
 async function getUser (username) {
-  const text = `SELECT * FROM users WHERE username = $1`
-  const result = await poolQquery(text, [username])
+  const queryText = `SELECT * FROM users WHERE username = $1`
+  const result = await poolQquery(queryText, [username])
   return result.rows[0]
 }
 
 async function getUserByToken(refresh_token) {
-  const text = `SELECT * FROM users WHERE refresh_token = $1`
-  const result = await poolQquery(text, [refresh_token])
+  const queryText = `SELECT * FROM users WHERE refresh_token = $1`
+  const result = await poolQquery(queryText, [refresh_token])
   return result.rows[0]
 }
 

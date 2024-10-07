@@ -1,79 +1,84 @@
 import createError from 'http-errors'
 import { missingData } from "./utils/missingData.js";
+import { getAllShows, addShow, getShowByName, getShowById, updateShow, deleteShow} from '../queries/showQueries.js';
 
-async function getAllShows (req, res) {
-  const allShows = await Show.find({})
+async function getAllShowsController (req, res) {
+  const allShows = await getAllShows()
   if (!allShows) {
     return res.status(204).json({'message':'No Shows Found'})
   }
   res.json(allShows)
 }
 
-async function addShow (req, res) {
-  const {name, description, profileImage, releaseSchedule} = req.body
-  const missing = missingData(name, description, profileImage, releaseSchedule)
-  if (!name || !description || !profileImage || !releaseSchedule) {
+async function addShowController (req, res) {
+  const {name, description, profileImage, releaseSchedule, studio, hostName} = req.body
+  const missing = missingData(name, description, profileImage, releaseSchedule, studio, hostName)
+  if (!name || !description || !profileImage || !releaseSchedule || !studio || !hostName) {
     throw createError(400, 'message', `${missing} required.`)
   }
 
-  const duplicate = await Show.findOne({ name: name }).exec()
+  const duplicateShow = await getShowByName(name)
 
-  if (duplicate) {
+  if (duplicateShow) {
     throw createError(409, 'Show already Exists')
   }
 
-  const newShow = await Show.create({
+  const newShow = await addShow({
     name: name,
-    hostName: req.body.hostName,
-    hostImage: req.body.hostImage,
     description: description,
     profileImage: profileImage,
+    releaseSchedule: releaseSchedule,
+    studio: studio,
+    hostName: hostName,
+    hostImage: req.body.hostImage,
     stars: req.body.stars,
     count: req.body.count,
     showType: req.body.showType,
-    releaseSchedule: releaseSchedule,
-    studio: req.body.studio,
     rated: req.body.rated
   })
   res.status(201).json(newShow)
 }
 
-async function updateShow(req, res) {
+async function updateShowControler(req, res) {
+  const showID = req.params.id
   const updates = req.body
-  const show = await Show.findById(req.params.id)
+  const show = await getShowById(showID)
+  //const show = await Show.findById(req.params.id)
 
   if(!show) {
-    throw createError(409, `Show with ${req.body.id} not found`)
+    throw createError(409, `Show with ${req.params.id} not found`)
   }
 
+  /*
   const updateKeys = Object.keys(updates)
-
   for (let key of updateKeys) {
     show[key] = updates[key]
-  }
+  }*/
 
-  await show.save()
+  await updateShow(showID, updates)
+  //await show.save()
   res.status(201).json(show)
 }
 
-async function deleteShow (req, res) {
-  const show = await Show.findById(req.params.id)
+async function deleteShowController (req, res) {
+  const id = req.params.id
+  const show = await getShowById(id)
   if(!show) {
     throw createError(404, `Show not found`)
   }
-  await Show.deleteOne(show)
+  const result = await deleteShow(id)
+  //await Show.deleteOne(show)
   res.status(201).json(show)
 }
 
-async function getShow(req, res) {
-  const show = await Show.findById(req.params.id)
-
+async function getShowController (req, res) {
+  const id = parseInt(req.params.id)
+  const show = await getShowById(req.params.id)
   if (!show) {
     throw createError(404, "Show not found")
   }
-
   res.json(show)
 }
 
 
-export { getAllShows, addShow, updateShow, deleteShow, getShow } 
+export { getAllShowsController, addShowController, updateShowControler, deleteShowController, getShowController } 

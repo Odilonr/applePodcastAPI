@@ -167,3 +167,16 @@
 2024/10/06	17:21:37	548674c6-6400-49b6-903f-68d28bfa2838	POST	undefined	/user/refresh
 2024/10/06	17:21:42	5083a55a-96cd-4205-a6d2-6bf739a0402b	POST	undefined	/user/refresh
 2024/10/06	17:21:43	4a1f8331-760c-4615-8d5c-65c0568d3534	POST	undefined	/user/refresh
+2024/10/06	21:16:52	25cc8e09-4828-4eb1-9667-e3e2ec4bdb67	GET	undefined	/shows/
+2024/10/06	21:20:04	355a55a7-9d4a-479b-962d-976a465d2462	GET	undefined	/shows/
+2024/10/06	21:29:20	0134a37d-a4fd-4f07-b27c-b0c3899d47f2	POST	undefined	/shows/
+2024/10/06	21:29:32	b97ad025-0426-4242-9be6-7af003513f69	POST	undefined	/shows/
+2024/10/06	21:36:56	a2bba5ca-1c6d-42e8-bb4c-6bfe932ba342	POST	undefined	/shows/
+2024/10/06	21:43:05	eda05588-fab4-402d-9efe-0b22ffc9b4fc	POST	undefined	/user/register
+2024/10/06	21:46:05	de793c47-cc4c-4d71-b072-ead81d1ee644	GET	undefined	/shows/
+2024/10/06	21:58:12	ee5e71ad-d415-4eb3-9086-4e50c9dfdac1	POST	undefined	/shows/
+2024/10/06	21:58:57	1cc8e4e6-9eab-476f-b27d-da1782b32fb7	POST	undefined	/shows/
+2024/10/06	21:59:44	a221d279-e049-492d-9e77-233bc6803ee9	POST	undefined	/shows/
+2024/10/06	22:18:39	81623f69-9559-4dc0-841a-d93db71c0179	GET	undefined	/shows/5955d75a-2c4c-4b1b-a16f-b31858ff4a51
+2024/10/06	22:18:50	2e13965a-6322-46bf-95dd-251857ce1345	DELETE	undefined	/shows/5955d75a-2c4c-4b1b-a16f-b31858ff4a51
+2024/10/06	22:19:12	4d3b1684-17b6-4794-9f3c-0f633909761e	GET	undefined	/shows/5955d75a-2c4c-4b1b-a16f-b31858ff4a51
