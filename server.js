@@ -5,6 +5,7 @@ import { errorHandler } from './middleware/errorHandler.js'
 import cookieParser from 'cookie-parser'
 import userRouter from './routes/users.js'
 import showRouter from './routes/shows.js'
+import episodeRouter from './routes/episodes.js'
 import 'express-async-errors'
 
 dotenv.config()
@@ -25,6 +26,7 @@ app.use('/user', userRouter)
 
 //app.use(verifyJWT)
 app.use('/shows', showRouter)
+app.use('/episodes', episodeRouter)
 
 app.use(errorHandler)
 

@@ -1,12 +1,12 @@
 import express from 'express'
-import { getAllShowsController, addShowController, updateShowControler, 
+import { getAllShowsController, addShowController, updateShowController, 
   deleteShowController, getShowController} from '../controllers/showController.js'
 
 const router = express.Router()
 
 router.get('/', getAllShowsController)
 router.post('/', addShowController)
-router.put('/:id', updateShowControler)
+router.put('/:id', updateShowController)
 router.delete('/:id', deleteShowController)
 
 router.get('/:id', getShowController)

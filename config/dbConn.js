@@ -8,7 +8,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 })
 
-async function poolQquery(text, params) {
+async function poolQuery(text, params) {
   const res = await pool.query(text, params)
   return res
 }
@@ -19,7 +19,7 @@ async function getClient() {
 }
 
 
-export {poolQquery,getClient, pool}
+export {poolQuery,getClient}
 
 
 

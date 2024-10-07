@@ -1,17 +1,17 @@
-import { poolQquery, getClient} from "../config/dbConn.js";
+import { poolQuery, getClient} from "../config/dbConn.js";
 import {v4 as uuidv4} from 'uuid'
 import { format } from 'date-fns';
 
 
 async function getUser (username) {
   const queryText = `SELECT * FROM users WHERE username = $1`
-  const result = await poolQquery(queryText, [username])
+  const result = await poolQuery(queryText, [username])
   return result.rows[0]
 }
 
 async function getUserByToken(refresh_token) {
   const queryText = `SELECT * FROM users WHERE refresh_token = $1`
-  const result = await poolQquery(queryText, [refresh_token])
+  const result = await poolQuery(queryText, [refresh_token])
   return result.rows[0]
 }
 
