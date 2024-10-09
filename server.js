@@ -6,6 +6,9 @@ import cookieParser from 'cookie-parser'
 import userRouter from './routes/users.js'
 import showRouter from './routes/shows.js'
 import episodeRouter from './routes/episodes.js'
+import { corsOption } from './config/corsOption.js'
+import { credentials } from './middleware/credentials.js'
+import cors from 'cors'
 import 'express-async-errors'
 
 dotenv.config()
@@ -15,6 +18,10 @@ const app = express()
 const PORT = process.env.PORT || 3500
 
 app.use(logger)
+
+//app.use(credentials)
+
+//app.use(cors(corsOption))
 
 app.use(express.json())
 

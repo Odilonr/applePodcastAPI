@@ -8,16 +8,22 @@ async function getAllShows () {
   return result.rows.length > 0 ? result.rows : null
 }
 
+async function getAllShowsRanked() {
+  const text = `SELECT * FROM shows ORDER BY review_count DESC`
+  const result = await poolQuery(text)
+  return result.rows.length > 0 ? result.rows : null
+}
+
 async function getShowByName (showName) {
   const queryText = `SELECT * FROM shows WHERE name = $1`
   const result = await poolQuery(queryText, [showName])
-  return result.rows[0]
+  return result.rows.length > 0 ? result.rows[0] : null
 }
 
 async function getShowById(showID) {
   const queryText = `SELECT * FROM shows WHERE id = $1`
   const result = await poolQuery(queryText, [showID])
-  return result.rows[0]
+  return result.rows.length > 0 ? result.rows[0] : null
 }
 
 async function addShow (newShow) {

@@ -1,5 +1,4 @@
 import createError from 'http-errors'
-import { missingData } from "./utils/missingData.js";
 import { getAllShows, addShow, getShowByName, getShowById, updateShow, deleteShow} from '../queries/showQueries.js';
 
 async function getAllShowsController (req, res) {
@@ -35,7 +34,7 @@ async function addShowController (req, res) {
     show_type: req.body.show_type,
     rated: req.body.rated
   })
-  res.status(201).json(newShow)
+  res.status(201).json({'message': 'Show succesfuly added'})
 }
 
 async function updateShowController(req, res) {
@@ -48,7 +47,7 @@ async function updateShowController(req, res) {
   }
 
   await updateShow(showID, updates)
-  res.status(201).json(show)
+  res.status(201).json({'message': 'successfuly Updated'})
 }
 
 async function deleteShowController (req, res) {
@@ -58,7 +57,7 @@ async function deleteShowController (req, res) {
     throw createError(404, `Show not found`)
   }
   const result = await deleteShow(id)
-  res.status(201).json(show)
+  res.status(201).json({'message': 'succesfully deleted'})
 }
 
 async function getShowController (req, res) {

@@ -1,3 +1,4 @@
+import res from 'express/lib/response.js'
 import { poolQuery, getClient} from '../config/dbConn.js'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -7,16 +8,31 @@ async function getAllEpisodes () {
   return result.rows.length > 0 ? result.rows : null
 }
 
+async function getHeroEpisodes () {
+  const text = `SELECT DISTINCT ON (shows.review_count) episodes.* FROM episodes
+                LEFT JOIN shows ON episodes.show_id = shows.id 
+                GROUP BY episodes.id, shows.review_count 
+                ORDER BY review_count DESC LIMIT 8`
+  const result = await poolQuery(text)
+  return result.rows.length > 0 ? result.rows : null
+}
+
+async function getLatestEPisodes() {
+  const text = `SELECT * FROM episodes ORDER BY date_added LIMIT 8`
+  const result = await poolQuery(text)
+  return result.rows.length > 0 ? result.rows : null
+}
+
 async function getEpByTitleShowId (episodeTitle, showID) {
   const queryText = `SELECT * FROM episodes WHERE title = $1 AND show_id = $2`
   const result = await poolQuery(queryText, [episodeTitle, showID])
-  return result.rows[0]
+  return result.rows.length > 0 ? result.rows[0] : null
 }
 
 async function getEpisodeById(episodeID) {
   const queryText = `SELECT * FROM episodes WHERE id = $1`
   const result = await poolQuery(queryText, [episodeID])
-  return result.rows[0]
+  return result.rows.length > 0 ? result.rows[0] : null
 }
 
 async function addEpisode (newEpisode) {

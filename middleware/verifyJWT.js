@@ -15,8 +15,8 @@ function verifyJWT (req, res, next) {
             console.log(`the error: ${err}`)
             return res.sendStatus(403)
           }
-          req.user = decoded.UserInfo.username
-          req.roles = decoded.UserInfo.roles
+          req.user = decoded.UserInfo.userID
+          req.role = decoded.UserInfo.role
           next()
         }
       ) 

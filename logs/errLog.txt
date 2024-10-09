@@ -2,3 +2,17 @@
 2024/10/01	19:52:46	9f3a7002-d665-4c80-8b7a-64d9c722e9f8	TypeError: console.loge is not a function
 2024/10/01	19:55:32	5ea7447c-1f30-4075-8893-ad865eaf9bae	TypeError: res.json is not a function
 2024/10/02	19:47:46	f40f516c-d6c9-47ac-b038-7dd5f3c9e026	SyntaxError: Expected double-quoted property name in JSON at position 105 (line 6 column 1)
+2024/10/07	17:20:16	527940fa-042b-4c72-97cf-71452d83b6e9	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:20:53	f1061d70-8a5a-464e-a823-2743e36ac19c	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:21:25	ca603b4c-af0d-42d9-9b7e-167d036140fd	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:22:18	54d1b05f-8bf6-41cd-950c-bc568c2d230c	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:22:34	1e971b90-fd09-4a23-ae60-1e1d0785f25e	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:23:23	027adda9-28f8-45f0-9954-60539a50f12c	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:24:04	3c7c21b6-bd1e-44ab-8c8a-1c28293c9036	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:26:22	f0f330dd-62b2-4feb-a49a-ff165c28d823	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:26:47	8bf0e041-786b-4d34-93dd-6fb859261146	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:27:35	e5ad6016-f465-44da-8136-b7946751a7aa	ReferenceError: allowedOrigin is not defined
+2024/10/07	17:27:57	c162f33b-32af-4d48-9702-3e6247610e59	ReferenceError: allowedOrigin is not defined
+2024/10/07	18:50:13	73e8434d-c437-458e-9597-c0b27a398cef	Error: Not allowed by CORS
+2024/10/07	18:50:28	2871cfd0-bc70-40d6-b122-1ead4d877474	Error: Not allowed by CORS
+2024/10/07	18:51:13	73262bdd-c5cd-4b30-b0aa-09c1d8ecefa2	Error: Not allowed by CORS
