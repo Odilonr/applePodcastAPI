@@ -7,7 +7,7 @@ async function registerNewUser (req, res) {
   const { username, password, email } = req.body
 
   if (!username || !password || !email) {
-    throw createError(400, 'Username and password required')
+    throw createError(400, 'All fields are required')
   }
 
   const duplicateUser = await getUser(username)
@@ -34,6 +34,7 @@ async function authenticateUser (req, res) {
   }
 
   const foundUser = await getUser(username)
+  console.log(foundUser)
   if (!foundUser) {
     throw createError(401, 'Wrong Username or password')
   }
@@ -41,23 +42,20 @@ async function authenticateUser (req, res) {
   if (passwordMatch){
     const role = foundUser.is_admin ? 'admin' : 'regular'
     const accessToken = jwt.sign(
-      {
-        "UserInfo":
-          {
-            "userID": foundUser.id,
-            "role": role
-          }
+      {  
+        "userID": foundUser.id,
+        "role": role  
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn : '60s'}
+      { expiresIn : '1000s'}
     )
     const refreshToken = jwt.sign(
-      {"username": foundUser.username},
+      {"userID": foundUser.id},
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: '1d' }
     )
     const result = await addRefreshToken(foundUser.id, refreshToken)
-    res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000})
+    res.cookie('jwt', refreshToken, {httpOnly: true,  sameSite: 'None', maxAge: 24 * 60 * 60 * 1000})
     res.json({ accessToken })
   } else {
     throw createError(401, 'Wrong Username or Password')
@@ -79,19 +77,18 @@ async function refreshToken (req, res) {
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     (err, decoded) => {
-      if (err || foundUser.username !== decoded.userID) {
+      if (err || foundUser.id !== decoded.userID) {
         return res.sendStatus(403)
       }
+      console.log(decoded.userID)
       const role = foundUser.is_admin ? 'admin' : 'regular'
       const accessToken = jwt.sign(
         {
-          "UserInfo" : {
-            "userID": decoded.userID,
-            "role": role
-          }
+          "userID": decoded.userID,
+          "role": role 
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '60s' }
+        { expiresIn: '1000s' }
       )
       res.json({ accessToken })
     }

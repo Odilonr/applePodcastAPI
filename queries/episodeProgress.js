@@ -1,9 +1,8 @@
-import res from "express/lib/response.js";
 import { poolQuery, getClient } from "../config/dbConn.js";
 import { v4 as uuidv4 } from "uuid";
 
-async function getCurrentEpTime (userID, episodeID) {
-  const text = `SELECT currentplaytime FROM episodes_progress WHERE user_id = $1 AND user_id = $2`
+async function getCurrentTime (userID, episodeID) {
+  const text = `SELECT currentplaytime FROM episodes_progress WHERE user_id = $1 AND episode_id = $2`
   const values = [userID, episodeID]
   const result = await poolQuery(text, values)
   return result.rows.length > 0 ? result.rows[0] : null
@@ -18,7 +17,7 @@ async function startEpTime (userID, episodeID) {
     const values = [uuidv4(), 0, userID, episodeID]
     const result = await client.query(query, values)
     await client.query('COMMIT')
-    return result
+    return await getCurrentTime(userID, episodeID)
   } catch(e) {
     await client.query('ROLLBACK')
     throw e
@@ -27,7 +26,7 @@ async function startEpTime (userID, episodeID) {
   }
 } 
 
-async function updateCurrentEpTime(playtime, userID, episodeID) {
+async function updateCurrentTime(playtime, userID, episodeID) {
   const client = await getClient()
   try {
     await client.query('BEGIN')
@@ -44,4 +43,4 @@ async function updateCurrentEpTime(playtime, userID, episodeID) {
   }
 }
 
-export {getCurrentEpTime, startEpTime, updateCurrentEpTime}
+export {getCurrentTime, startEpTime, updateCurrentTime}

@@ -1,13 +1,13 @@
 import { getShowByName } from "../queries/showQueries.js"
 import { getAllEpisodes, getEpByTitleShowId , getEpisodeById, addEpisode, updateEpisode, 
   deleteEpisode } from "../queries/episodeQueries.js"
-import { getCurrentEpTime, startEpTime, updateCurrentEpTime } from "../queries/episodeProgress.js"
+import { getCurrentTime, startEpTime, updateCurrentTime } from "../queries/episodeProgress.js"
 import jwt from "jsonwebtoken"
 import createError from "http-errors"
 
 async function getAllEpisodesController (req, res) {
   const allEpisodes = await getAllEpisodes()
-  if (!allEpisodes) {
+  if (!allEpisodes) { 
     return res.status(204).json({'message':'No Episodes Found'})
   }
   res.json(allEpisodes)
@@ -77,33 +77,63 @@ async function getEpisodeController(req, res) {
   res.json(episode)
 }
 
-async function getCurrentPlayTimeController (req, res) {
+async function getCurrentPlayTime (req, res) {
   const episodeID = req.params.id
-  const authHeader = req.headers.authorization || req.headers.authorization
+  const authHeader = req.headers.authorization || req.headers.Authorization
+  console.log(authHeader)
   let currentplaytime
   if (!authHeader.startsWith('Bearer ')) {
     throw createError(401, 'Invalid')
   }
 
   const token = authHeader.split(' ')[1]
+  console.log(token)
   jwt.verify(
     token,
-    process.env.ACCES_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET,
     async (err, decoded) => {
       if (err) {
         throw createError(403, 'Invalid')
       }
       const userID = decoded.userID
-      currentplaytime = await getCurrentEpTime(userID, episodeID)
+      console.log(userID)
+      currentplaytime = await getCurrentTime(userID, episodeID)
       if (!currentplaytime) {
-        
+        currentplaytime = await startEpTime(userID, episodeID)
       }
+      res.json(currentplaytime)
     }
   )
-  res.json(currentplaytime)
+  
+}
+
+async function updateCurrentEpTime (req, res) {
+  const episodeID = req.params.id
+  const currentplaytime = req.body.currentplaytime
+  const authHeader = req.headers.authorization || req.headers.Authorization
+  if (!authHeader.startsWith('Bearer ')) {
+    throw createError(403, 'Invalid')
+  }
+
+  const token = authHeader.split(' ')[1]
+  jwt.verify(
+    token, 
+    process.env.ACCESS_TOKEN_SECRET,
+    async (err, decoded) => {
+      if (err) {
+        throw createError(403, `Error${err}`)
+      }
+      const userID = decoded.userID
+      console.log(decoded.userID)
+      console.log(currentplaytime)
+      await updateCurrentTime(currentplaytime, userID, episodeID)
+      res.json({'message': 'Updated Timestamp Succesfully'})
+    }
+  )
+  
 }
 
 
 export { getAllEpisodesController, addEpisodeController, updateEpisodeController, deleteEpisodeController, 
-  getEpisodeController
+  getEpisodeController, getCurrentPlayTime, updateCurrentEpTime
 }
