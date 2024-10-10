@@ -1,28 +1,31 @@
 import { getShowByName } from "../queries/showQueries.js"
-import { getAllEpisodes, getEpByTitleShowId , getEpisodeById, addEpisode, updateEpisode, 
+import { getEpisodes, getEpByTitleShowId , getEpisodeById, addEpisode, updateEpisode, 
   deleteEpisode } from "../queries/episodeQueries.js"
 import { getCurrentTime, startEpTime, updateCurrentTime } from "../queries/episodeProgress.js"
 import jwt from "jsonwebtoken"
 import createError from "http-errors"
+import fs from 'fs'
 
 async function getAllEpisodesController (req, res) {
-  const allEpisodes = await getAllEpisodes()
-  if (!allEpisodes) { 
+  const episodeType = req.query.type
+  console.log(episodeType)
+  const episodes = await getEpisodes(episodeType)
+  if (!episodes) { 
     return res.status(204).json({'message':'No Episodes Found'})
   }
-  res.json(allEpisodes)
+  res.json(episodes)
 }
 
 async function addEpisodeController(req, res) {
   const {
-    title, description, audio_link, date_added, duration, showName
+    title, description, audio_link, date_added, duration, show_name
   } = req.body
 
-  if (!title || !description || !audio_link || !date_added || !duration || !showName) {
+  if (!title || !description || !audio_link || !date_added || !duration || !show_name) {
     throw createError(400, 'Missing Required Data')
   }
 
-  const show = await getShowByName(showName)
+  const show = await getShowByName(show_name)
 
   if (!show) {
     throw createError(404, 'SHow does not exist')
@@ -133,7 +136,40 @@ async function updateCurrentEpTime (req, res) {
   
 }
 
+async function audioEpController (req, res) {
+  const audioPath = req.query.path
+
+  if (!audioPath) {
+    res.status(404).json({'message': 'no audio found'})
+    throw createError(404, 'Audio not found')
+  }
+
+  const audioInfo = fs.statSync(audioPath)
+  const audioSize = audioInfo.size
+  if (req.headers.range) {
+    const range = req.headers.range
+    const parts = range.replace('bytes=', '').split("-")
+    const partialStart = parts[0]
+    const partialEnd = parts[1]
+
+    const start = parseInt(partialStart, 10)
+    const end = partialEnd ? parseInt(partialEnd, 10) : audioSize - 1;
+    const chunkSize = (end-start)+1
+    const readstream = fs.createReadStream(audioPath, {start: start, end: end})
+    res.writeHead(206, {
+      'Content-Range': 'bytes ' + start + '-' + end + '/' + audioSize,
+      'Accept-Ranges': 'bytes', 
+      'Content-Length': chunkSize, 
+      'Content-Type': 'audio/mpeg'
+    })
+    readstream.pipe(res)
+  } else {
+    res.writeHead(200, {'Content-Length': audioSize, 'Content-Type' : 'audio/mpeg'})
+    fs.createReadStream(audioPath).pipe(res)
+  }
+}
+
 
 export { getAllEpisodesController, addEpisodeController, updateEpisodeController, deleteEpisodeController, 
-  getEpisodeController, getCurrentPlayTime, updateCurrentEpTime
+  getEpisodeController, getCurrentPlayTime, updateCurrentEpTime, audioEpController
 }

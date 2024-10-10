@@ -1,11 +1,16 @@
-import res from 'express/lib/response.js'
 import { poolQuery, getClient} from '../config/dbConn.js'
 import { v4 as uuidv4 } from 'uuid'
 
-async function getAllEpisodes () {
-  const text = `SELECT * FROM episodes`
-  const result = await poolQuery(text)
-  return result.rows.length > 0 ? result.rows : null
+async function getEpisodes (queryType) {
+  if (queryType === 'Latest') {
+    return await getLatestEPisodes()
+  } else if (queryType == 'Hero') {
+    return await getHeroEpisodes()
+  } else {
+    const text = `SELECT * FROM episodes`
+    const result = await poolQuery(text)
+    return result.rows.length > 0 ? result.rows : null
+  }
 }
 
 async function getHeroEpisodes () {
@@ -18,7 +23,7 @@ async function getHeroEpisodes () {
 }
 
 async function getLatestEPisodes() {
-  const text = `SELECT * FROM episodes ORDER BY date_added LIMIT 8`
+  const text = `SELECT * FROM episodes ORDER BY date_added DESC LIMIT 8`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
 }
@@ -97,4 +102,4 @@ async function deleteEpisode(episodeID) {
 }
 
 
-export {getAllEpisodes, getEpisodeById, getEpByTitleShowId , addEpisode, updateEpisode, deleteEpisode}
+export {getEpisodes, getEpisodeById, getEpByTitleShowId , addEpisode, updateEpisode, deleteEpisode}
