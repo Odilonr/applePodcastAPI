@@ -2,14 +2,17 @@ import { poolQuery, getClient} from "../config/dbConn.js";
 import {v4 as uuidv4} from 'uuid'
 import { format } from 'date-fns';
 
-async function getAllShows () {
+async function getShows (type) {
+  if (type === 'Popular') {
+    return await getShowsRanked()
+  }
   const text = `SELECT * FROM shows`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
 }
 
-async function getAllShowsRanked() {
-  const text = `SELECT * FROM shows ORDER BY review_count DESC`
+async function getShowsRanked() {
+  const text = `SELECT * FROM shows ORDER BY review_count DESC LIMIT 8`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
 }
@@ -90,5 +93,5 @@ async function deleteShow (showID) {
 }
 
 
-export {getAllShows, addShow, getShowByName, updateShow, getShowById, deleteShow}
+export {getShows, addShow, getShowByName, updateShow, getShowById, deleteShow}
 

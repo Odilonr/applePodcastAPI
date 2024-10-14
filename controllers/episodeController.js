@@ -5,10 +5,14 @@ import { getCurrentTime, startEpTime, updateCurrentTime } from "../queries/episo
 import jwt from "jsonwebtoken"
 import createError from "http-errors"
 import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 async function getAllEpisodesController (req, res) {
   const episodeType = req.query.type
-  console.log(episodeType)
   const episodes = await getEpisodes(episodeType)
   if (!episodes) { 
     return res.status(204).json({'message':'No Episodes Found'})
@@ -139,7 +143,7 @@ async function updateCurrentEpTime (req, res) {
 async function audioEpController (req, res) {
   const audioPath = req.query.path
 
-  if (!audioPath) {
+  if (!fs.existsSync(path.join(__dirname, '..', audioPath))) {
     res.status(404).json({'message': 'no audio found'})
     throw createError(404, 'Audio not found')
   }
@@ -149,11 +153,14 @@ async function audioEpController (req, res) {
   if (req.headers.range) {
     const range = req.headers.range
     const parts = range.replace('bytes=', '').split("-")
+    console.log(parts)
     const partialStart = parts[0]
     const partialEnd = parts[1]
 
     const start = parseInt(partialStart, 10)
+    console.log(start)
     const end = partialEnd ? parseInt(partialEnd, 10) : audioSize - 1;
+    console.log(end)
     const chunkSize = (end-start)+1
     const readstream = fs.createReadStream(audioPath, {start: start, end: end})
     res.writeHead(206, {

@@ -1,8 +1,9 @@
 import createError from 'http-errors'
-import { getAllShows, addShow, getShowByName, getShowById, updateShow, deleteShow} from '../queries/showQueries.js';
+import { getShows, addShow, getShowByName, getShowById, updateShow, deleteShow} from '../queries/showQueries.js';
 
 async function getAllShowsController (req, res) {
-  const allShows = await getAllShows()
+  const type = req.query.type
+  const allShows = await getShows(type)
   if (!allShows) {
     return res.status(204).json({'message':'No Shows Found'})
   }

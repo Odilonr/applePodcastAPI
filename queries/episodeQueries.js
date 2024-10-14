@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 async function getEpisodes (queryType) {
   if (queryType === 'Latest') {
-    return await getLatestEPisodes()
+    return await getLatestEpisodes()
   } else if (queryType == 'Hero') {
     return await getHeroEpisodes()
   } else {
@@ -14,16 +14,19 @@ async function getEpisodes (queryType) {
 }
 
 async function getHeroEpisodes () {
-  const text = `SELECT DISTINCT ON (shows.review_count) episodes.* FROM episodes
+  const text = `SELECT DISTINCT ON (shows.review_count) episodes.*, 
+                shows.profile_img_link AS profile FROM episodes
                 LEFT JOIN shows ON episodes.show_id = shows.id 
-                GROUP BY episodes.id, shows.review_count 
+                GROUP BY episodes.id, shows.review_count, shows.profile_img_link
                 ORDER BY review_count DESC LIMIT 8`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
 }
 
-async function getLatestEPisodes() {
-  const text = `SELECT * FROM episodes ORDER BY date_added DESC LIMIT 8`
+async function getLatestEpisodes() {
+  const text = `SELECT episodes.*, shows.profile_img_link AS profile 
+                FROM episodes LEFT JOIN shows ON episodes.show_id = shows.id 
+                ORDER BY date_added DESC LIMIT 8`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
 }

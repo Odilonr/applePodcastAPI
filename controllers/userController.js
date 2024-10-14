@@ -55,7 +55,7 @@ async function authenticateUser (req, res) {
       { expiresIn: '1d' }
     )
     const result = await addRefreshToken(foundUser.id, refreshToken)
-    res.cookie('jwt', refreshToken, {httpOnly: true,  sameSite: 'None', maxAge: 24 * 60 * 60 * 1000})
+    res.cookie('jwt', refreshToken, {httpOnly: true,  sameSite: 'None',secure:true, maxAge: 24 * 60 * 60 * 1000})
     res.json({ accessToken })
   } else {
     throw createError(401, 'Wrong Username or Password')
@@ -109,7 +109,7 @@ async function logOutUser (req, res) {
   }
   const result = await addRefreshToken(foundUser.id, null)
 
-  res.clearCookie('jwt', { httpOnly: true, sameSite: 'None'})
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure:true})
   res.sendStatus(204)
 } 
 

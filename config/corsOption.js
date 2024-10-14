@@ -1,6 +1,8 @@
+import { credentials } from "../middleware/credentials.js";
 import { allowedOrigins } from "./allowedOrigins.js";
 
 export const corsOption = {
+  credentials:true,
   origin: (origin, callback) => {
     if (allowedOrigins.indexOf(origin) !== -1 || origin) {
       callback(null, true)
