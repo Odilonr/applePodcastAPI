@@ -103,7 +103,6 @@ async function getCurrentPlayTime (req, res) {
         throw createError(403, 'Invalid')
       }
       const userID = decoded.userID
-      console.log(userID)
       currentplaytime = await getCurrentTime(userID, episodeID)
       if (!currentplaytime) {
         currentplaytime = await startEpTime(userID, episodeID)
@@ -115,8 +114,9 @@ async function getCurrentPlayTime (req, res) {
 }
 
 async function updateCurrentEpTime (req, res) {
-  const episodeID = req.params.id
-  const currentplaytime = req.body.currentplaytime
+  const episodeID = req.query.episodeID
+  console.log(req.query)
+  const currentplaytime = parseInt(req.query.new)
   const authHeader = req.headers.authorization || req.headers.Authorization
   if (!authHeader.startsWith('Bearer ')) {
     throw createError(403, 'Invalid')
@@ -132,6 +132,7 @@ async function updateCurrentEpTime (req, res) {
       }
       const userID = decoded.userID
       console.log(decoded.userID)
+      console.log(episodeID)
       console.log(currentplaytime)
       await updateCurrentTime(currentplaytime, userID, episodeID)
       res.json({'message': 'Updated Timestamp Succesfully'})

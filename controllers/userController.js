@@ -34,7 +34,6 @@ async function authenticateUser (req, res) {
   }
 
   const foundUser = await getUser(username)
-  console.log(foundUser)
   if (!foundUser) {
     throw createError(401, 'Wrong Username or password')
   }
@@ -65,12 +64,12 @@ async function authenticateUser (req, res) {
 async function refreshToken (req, res) {
   const cookies = req.cookies
   if (!(cookies && cookies.jwt)) {
-    throw createError(400)
+    throw createError(400, 'Please Authenticate')
   }
   const refreshToken = cookies.jwt
   const foundUser = await getUserByToken(refreshToken)
   if (!foundUser) {
-    throw createError(403)
+    throw createError(403, 'Please Authenticate')
   }
 
   jwt.verify(
@@ -78,7 +77,7 @@ async function refreshToken (req, res) {
     process.env.REFRESH_TOKEN_SECRET,
     (err, decoded) => {
       if (err || foundUser.id !== decoded.userID) {
-        return res.sendStatus(403)
+        throw createError(403)
       }
       console.log(decoded.userID)
       const role = foundUser.is_admin ? 'admin' : 'regular'

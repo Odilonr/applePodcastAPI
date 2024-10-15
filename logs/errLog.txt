@@ -25,3 +25,38 @@
 2024/10/10	20:22:48	063df5ba-45e8-4b7d-8f02-426c30c7dc5a	Error: Not allowed by CORS
 2024/10/10	21:33:41	3c1b1682-c397-45e0-b1e8-1543a3681f88	Error: Not allowed by CORS
 2024/10/12	10:19:33	85c03ad1-5486-4b9a-827e-9146724948c1	Error: Not allowed by CORS
+2024/10/14	08:48:22	99e9d02c-d97f-47e2-94e5-649dc89d75b6	UnauthorizedError: Wrong Username or Password
+2024/10/14	08:51:58	1939efcb-6c37-4891-8008-dbe67527a17e	UnauthorizedError: Wrong Username or Password
+2024/10/14	09:07:46	755ffd00-23e3-488d-a644-62b9fc71788a	ReferenceError: passwordMatchs is not defined
+2024/10/14	09:08:18	782e2243-2e14-425b-bae4-94bce069e7e7	UnauthorizedError: Wrong Username or Password
+2024/10/14	15:55:18	01c46435-dec5-498f-803a-33be79b8589c	BadRequestError: Please Authenticate
+2024/10/14	15:55:37	64a3df46-6cd5-460a-a632-fb6eb6b5de38	BadRequestError: Please Authenticate
+2024/10/14	15:57:19	c76040e6-4f53-4f6b-91d2-f59ff50ca2b0	BadRequestError: Please Authenticate
+2024/10/14	15:57:49	1ba91377-94bc-4301-8815-ef5810e2d69f	BadRequestError: Please Authenticate
+2024/10/14	15:59:07	1cd135c9-9c73-4da9-a7c8-0af7b99b3b5d	BadRequestError: Please Authenticate
+2024/10/14	15:59:16	719e3835-423e-47cb-82cd-95e58555886c	BadRequestError: Please Authenticate
+2024/10/14	16:00:32	800933fb-3aaf-4c1b-ab48-253bf39d274d	BadRequestError: Please Authenticate
+2024/10/14	16:00:53	9b67a7f8-679a-473a-bb35-fbfbe76bdff0	BadRequestError: Please Authenticate
+2024/10/14	16:02:07	ba277a65-a1fa-4b1b-babc-7c6d750923e8	BadRequestError: Please Authenticate
+2024/10/14	16:03:50	588d04c1-b572-4147-af7c-7488ab4c5046	BadRequestError: Please Authenticate
+2024/10/14	16:04:01	e2e4d0d0-6fd2-4f1d-969b-a036f7255126	BadRequestError: Please Authenticate
+2024/10/14	16:04:27	2d81c4de-1207-418e-a794-85b54c30c5d6	BadRequestError: Please Authenticate
+2024/10/14	16:05:32	4ffe31a0-2a4e-4717-80db-2fec9b508210	BadRequestError: Please Authenticate
+2024/10/14	16:05:55	cbe710d6-0c20-4fd6-bf6c-968a871f77b9	BadRequestError: Please Authenticate
+2024/10/14	16:06:00	5be3f012-c611-4b90-9500-44dbec9e28d5	BadRequestError: Please Authenticate
+2024/10/14	16:07:21	4b79c2b0-2741-4bd9-832d-4d944ab5405f	BadRequestError: Please Authenticate
+2024/10/14	16:07:29	0874e3c0-0f79-485a-8d0f-040c48cde6a7	BadRequestError: Please Authenticate
+2024/10/14	16:07:50	23651d98-0c2b-4a6f-aa83-52088a52011c	BadRequestError: Please Authenticate
+2024/10/14	16:07:53	c835c070-e9a6-4e39-9d05-48444e5f2961	BadRequestError: Please Authenticate
+2024/10/14	18:30:04	e14fc1a7-f1fb-44ac-a303-0f1393c23878	BadRequestError: Please Authenticate
+2024/10/14	18:30:24	7b2455cf-ce9e-4c34-b916-d9692eaafa7f	BadRequestError: Please Authenticate
+2024/10/14	18:30:33	981ac52e-9d2f-4699-aa4d-ca5a6c5b6c70	BadRequestError: Please Authenticate
+2024/10/14	18:34:34	9644b05f-fa22-4d1b-8860-f040719790da	BadRequestError: Please Authenticate
+2024/10/14	18:35:33	8d3c4eb9-ce6b-42c2-98a3-bbb1426f3ba9	BadRequestError: Please Authenticate
+2024/10/14	18:36:07	9ef04698-e7bb-43c4-a220-b765c2bc5af1	BadRequestError: Please Authenticate
+2024/10/14	18:36:23	e65c83b5-a1ce-4feb-a3c5-d8705bbe157a	BadRequestError: Please Authenticate
+2024/10/14	18:40:42	568439ad-dbe7-4a6a-86c2-0ebd425cb12c	BadRequestError: Please Authenticate
+2024/10/14	18:57:28	99493640-5809-4952-b43f-3a4be061d6ac	UnauthorizedError: Invalid
+2024/10/14	19:03:19	5ba1d0a7-00f8-428b-95af-1c99b8c31f2a	BadRequestError: Please Authenticate
+2024/10/14	19:03:37	5f6b577a-3ffb-4eb1-b7d5-148368c8da82	BadRequestError: Please Authenticate
+2024/10/14	19:53:13	65b33014-a8b2-4a21-8748-ae7f8f56457b	BadRequestError: Please Authenticate
