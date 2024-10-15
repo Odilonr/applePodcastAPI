@@ -60,3 +60,9 @@
 2024/10/14	19:03:19	5ba1d0a7-00f8-428b-95af-1c99b8c31f2a	BadRequestError: Please Authenticate
 2024/10/14	19:03:37	5f6b577a-3ffb-4eb1-b7d5-148368c8da82	BadRequestError: Please Authenticate
 2024/10/14	19:53:13	65b33014-a8b2-4a21-8748-ae7f8f56457b	BadRequestError: Please Authenticate
+2024/10/15	09:50:19	356921a4-1e23-4363-af3d-5369f40e01e9	BadRequestError: Please Authenticate
+2024/10/15	09:54:44	225b790e-2862-4a9e-8915-7de7ac2e62af	BadRequestError: Please Authenticate
+2024/10/15	10:02:00	159da2df-b202-447a-9fc5-ba7c6c8c280f	BadRequestError: Please Authenticate
+2024/10/15	10:02:35	9d8acd25-3ab1-49bb-931f-98d9b485ab93	BadRequestError: Please Authenticate
+2024/10/15	10:06:27	0a5924d1-a97f-47f8-8d99-c611ea9d009c	TypeError: Cannot read properties of undefined (reading 'userID')
+2024/10/15	10:08:28	6acd44c0-728e-4b36-8714-b05463d6eda0	BadRequestError: Please Authenticate

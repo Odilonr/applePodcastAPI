@@ -114,30 +114,33 @@ async function getCurrentPlayTime (req, res) {
 }
 
 async function updateCurrentEpTime (req, res) {
-  const episodeID = req.query.episodeID
-  console.log(req.query)
-  const currentplaytime = parseInt(req.query.new)
-  const authHeader = req.headers.authorization || req.headers.Authorization
-  if (!authHeader.startsWith('Bearer ')) {
-    throw createError(403, 'Invalid')
-  }
 
-  const token = authHeader.split(' ')[1]
-  jwt.verify(
-    token, 
-    process.env.ACCESS_TOKEN_SECRET,
-    async (err, decoded) => {
-      if (err) {
-        throw createError(403, `Error${err}`)
-      }
-      const userID = decoded.userID
-      console.log(decoded.userID)
-      console.log(episodeID)
-      console.log(currentplaytime)
-      await updateCurrentTime(currentplaytime, userID, episodeID)
-      res.json({'message': 'Updated Timestamp Succesfully'})
+  try {
+    const episodeID = req.query.episodeID
+    const currentplaytime = parseInt(req.query.new)
+    const authHeader = req.headers.authorization || req.headers.Authorization
+    if (!authHeader.startsWith('Bearer ')) {
+      throw createError(403, 'Invalid')
     }
-  )
+
+    const token = authHeader.split(' ')[1]
+    jwt.verify(
+      token, 
+      process.env.ACCESS_TOKEN_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          throw createError(403, `Error${err}`)
+        }
+        const userID = decoded.userID
+        console.log(decoded.userID)
+        console.log(episodeID)
+        console.log(currentplaytime)
+        await updateCurrentTime(currentplaytime, userID, episodeID)
+        res.json({'message': 'Updated Timestamp Succesfully'})
+      }
+    ) } catch(e) {
+    console.log(e.message)
+  }
   
 }
 
