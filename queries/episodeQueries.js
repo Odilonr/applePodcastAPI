@@ -15,17 +15,18 @@ async function getEpisodes (queryType) {
 
 async function getHeroEpisodes () {
   const text = `SELECT DISTINCT ON (shows.review_count) episodes.*, 
-                shows.profile_img_link AS profile FROM episodes
+                shows.profile_img_link AS profile, shows.name AS show_name 
+                FROM episodes
                 LEFT JOIN shows ON episodes.show_id = shows.id 
-                GROUP BY episodes.id, shows.review_count, shows.profile_img_link
+                GROUP BY episodes.id, shows.review_count, shows.profile_img_link, show_name
                 ORDER BY review_count DESC LIMIT 8`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
 }
 
 async function getLatestEpisodes() {
-  const text = `SELECT episodes.*, shows.profile_img_link AS profile 
-                FROM episodes LEFT JOIN shows ON episodes.show_id = shows.id 
+  const text = `SELECT episodes.*, shows.profile_img_link AS profile,
+                shows.name AS show_name FROM episodes LEFT JOIN shows ON episodes.show_id = shows.id 
                 ORDER BY date_added DESC LIMIT 8`
   const result = await poolQuery(text)
   return result.rows.length > 0 ? result.rows : null
@@ -38,7 +39,9 @@ async function getEpByTitleShowId (episodeTitle, showID) {
 }
 
 async function getEpisodeById(episodeID) {
-  const queryText = `SELECT * FROM episodes WHERE id = $1`
+  const queryText = `SELECT episodes.*, shows.profile_img_link AS profile, shows.name AS show_name
+                     FROM episodes LEFT JOIN shows ON episodes.show_id = shows.id 
+                     WHERE episodes.id = $1`
   const result = await poolQuery(queryText, [episodeID])
   return result.rows.length > 0 ? result.rows[0] : null
 }
